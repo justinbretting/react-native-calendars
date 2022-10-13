@@ -18,6 +18,8 @@ import EventBlock, {Event, PackedEvent} from './EventBlock';
 import NowIndicator from './NowIndicator';
 import useTimelineOffset from './useTimelineOffset';
 
+console.log('JB TIMELINE')
+
 export interface TimelineProps {
   /**
    * The date / dates of this timeline instance in ISO format (e.g. 2011-10-25)
