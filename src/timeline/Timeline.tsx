@@ -4,9 +4,8 @@ import times from 'lodash/times';
 import groupBy from 'lodash/groupBy';
 
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, useWindowDimensions} from 'react-native';
 
-import constants from '../commons/constants';
 import {generateDay} from '../dateutils';
 import {getCalendarDateString} from '../services';
 import {Theme} from '../types';
@@ -17,8 +16,6 @@ import TimelineHours, {TimelineHoursProps} from './TimelineHours';
 import EventBlock, {Event, PackedEvent} from './EventBlock';
 import NowIndicator from './NowIndicator';
 import useTimelineOffset from './useTimelineOffset';
-
-console.log('JB TIMELINE')
 
 export interface TimelineProps {
   /**
@@ -158,10 +155,11 @@ const Timeline = (props: TimelineProps) => {
   const styles = useRef(styleConstructor(theme || props.styles, calendarHeight.current));
 
   const {scrollEvents} = useTimelineOffset({onChangeOffset, scrollOffset, scrollViewRef: scrollView});
+  const {width: screenWidth} = useWindowDimensions()
 
   const width = useMemo(() => {
-    return constants.screenWidth - timelineLeftInset;
-  }, [timelineLeftInset]);
+    return screenWidth - timelineLeftInset;
+  }, [timelineLeftInset, screenWidth]);
 
   const packedEvents = useMemo(() => {
     return map(pageEvents, (_e, i) => {
@@ -172,7 +170,7 @@ const Timeline = (props: TimelineProps) => {
         rightEdgeSpacing: rightEdgeSpacing / numberOfDays
       });
     });
-  }, [pageEvents, start, numberOfDays]);
+  }, [pageEvents, start, numberOfDays, width]);
 
   useEffect(() => {
     let initialPosition = 0;
@@ -246,7 +244,7 @@ const Timeline = (props: TimelineProps) => {
       // @ts-expect-error
       ref={scrollView}
       style={styles.current.container}
-      contentContainerStyle={[styles.current.contentStyle, {width: constants.screenWidth}]}
+      contentContainerStyle={[styles.current.contentStyle, {width: screenWidth}]}
       showsVerticalScrollIndicator={false}
       {...scrollEvents}
     >
