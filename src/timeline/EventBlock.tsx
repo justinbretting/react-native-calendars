@@ -58,16 +58,16 @@ const EventBlock = (props: EventBlockProps) => {
         renderEvent(event)
       ) : (
         <View>
-          <Text numberOfLines={1} style={styles.eventTitle}>
+            <Text numberOfLines={1} style={[styles.eventTitle, { color: 'white' }]}>
             {event.title || 'Event'}
           </Text>
           {numberOfLines > 1 ? (
-            <Text numberOfLines={numberOfLines - 1} style={[styles.eventSummary]}>
+            <Text numberOfLines={numberOfLines - 1} style={[styles.eventSummary, { color: 'white' }]}>
               {event.summary || ' '}
             </Text>
           ) : null}
           {numberOfLines > 2 ? (
-            <Text style={styles.eventTimes} numberOfLines={1}>
+              <Text style={[styles.eventTimes, { color: 'white' }]} numberOfLines={1}>
               {new XDate(event.start).toString(formatTime)} - {new XDate(event.end).toString(formatTime)}
             </Text>
           ) : null}
